@@ -5,22 +5,50 @@
   <title>Library</title>
   <style>
     body { font-family: Arial, sans-serif; padding: 20px; }
+
     .meme {
-      border: 1px solid #ccc;
-      padding: 10px;
-      margin-bottom: 20px;
+      position: relative;
+      display: inline-block;
+      margin-bottom: 40px;
       max-width: 500px;
     }
+
     .meme img {
-      max-width: 100%;
+      width: 100%;
+      height: auto;
       display: block;
-      margin-bottom: 10px;
+    }
+
+    .caption {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      text-align: center;
+      color: white;
+      font-size: 2em;
+      font-weight: bold;
+      text-shadow:
+        2px 2px 0 black,
+        -2px 2px 0 black,
+        2px -2px 0 black,
+        -2px -2px 0 black;
+      pointer-events: none;
+      word-wrap: break-word;
+    }
+
+    .top-caption {
+      top: 10px;
+    }
+
+    .bottom-caption {
+      bottom: 10px;
     }
   </style>
 </head>
 <body>
 
-<h1>Library</h1>
+<h1>The Library of Epic Memes</h1>
 <div id="gallery">Loading memes...</div>
 
 <script>
@@ -46,23 +74,29 @@ async function loadGallery() {
     if (file.name.endsWith(".json")) {
       const memeData = await fetch(file.download_url).then(r => r.json());
 
-      const div = document.createElement("div");
-      div.className = "meme";
+      // Create meme container
+      const memeDiv = document.createElement("div");
+      memeDiv.className = "meme";
 
+      // Use the ORIGINAL base image so GIFs animate
       const img = document.createElement("img");
-      img.src = memeData.previewBase64;
+      img.src = `https://raw.githubusercontent.com/${owner}/${repo}/main/samples/${memeData.baseImage}`;
 
-      const info = document.createElement("div");
-      info.innerHTML = `
-        <b>Top:</b> ${memeData.top}<br>
-        <b>Bottom:</b> ${memeData.bottom}<br>
-        <b>Base Image:</b> ${memeData.baseImage}<br>
-        <b>Submitted:</b> ${new Date(memeData.timestamp).toLocaleString()}
-      `;
+      // Captions
+      const topCap = document.createElement("div");
+      topCap.className = "caption top-caption";
+      topCap.textContent = memeData.top;
 
-      div.appendChild(img);
-      div.appendChild(info);
-      gallery.appendChild(div);
+      const bottomCap = document.createElement("div");
+      bottomCap.className = "caption bottom-caption";
+      bottomCap.textContent = memeData.bottom;
+
+      // Add everything
+      memeDiv.appendChild(img);
+      memeDiv.appendChild(topCap);
+      memeDiv.appendChild(bottomCap);
+
+      gallery.appendChild(memeDiv);
     }
   }
 }
