@@ -40,7 +40,7 @@
 // -------------------------
 // CONFIG — replace with your Google Form entry ID
 // -------------------------
-const GOOGLE_FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSfg2kJJox8XPTScxLq5vTAjtHGfoDiwI_rCEAEvgYh0mDhNEQ/viewform";
+const GOOGLE_FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSfg2kJJox8XPTScxLq5vTAjtHGfoDiwI_rCEAEvgYh0mDhNEQ/formResponse";
 const ENTRY_JSON = "entry.1735222594"; // Replace with your real entry ID
 
 // -------------------------
@@ -48,7 +48,7 @@ const ENTRY_JSON = "entry.1735222594"; // Replace with your real entry ID
 // -------------------------
 async function loadSampleImages() {
   const response = await fetch(
-    "https://api.github.com/repos/brainhealth-meme-library/brainhealth-meme-library.github.io/contents/samples"
+    "https://api.github.com/repos/epicmemelibrary/epicmemelibrary.github.io/contents/samples"
   );
 
   const select = document.getElementById("sampleSelect");
